@@ -172,7 +172,7 @@ $_SESSION['start_time'] = time();
                           <div class="form-group">
                               <label class="col-sm-2 col-sm-2 control-label">Judul Buku</label>
                               <div class="col-sm-8">
-                                  <input name="judul" type="text" id="judul" class="form-control" placeholder="Ex : Algoritma Matematika" required />
+                                  <input name="judul_buku" type="text" id="judul_buku" class="form-control" placeholder="Ex : Algoritma Matematika" required />
                                   <!--<span class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
                               </div>
                           </div>
@@ -212,7 +212,7 @@ $_SESSION['start_time'] = time();
                               <label class="col-sm-2 col-sm-2 control-label"></label>
                               <div class="col-sm-8">
                                   <input type="submit" value="Simpan" class="btn btn-sm btn-primary" />&nbsp;
-	                              <a href="input-anggota.php" class="btn btn-sm btn-danger">Batal </a>
+	                              <a href="input-transaksi.php" class="btn btn-sm btn-danger">Batal </a>
                               </div>
                           </div>
                           <div style="margin-top: 20px;"></div>

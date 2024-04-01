@@ -1,7 +1,7 @@
 <?php 
 session_start();
 if (empty($_SESSION['username'])){
-	header('location:../index.php');	
+	header('location:../login.html');	
 } else {
 	include "../conn.php";
 ?>
@@ -178,37 +178,38 @@ $_SESSION['start_time'] = time();
                     if(isset($_POST['qcari'])){
 	               $qcari=$_POST['qcari'];
 	               $query1="SELECT * FROM  trans_pinjam 
-	               where judul like '%$qcari%'
-	               or pengarang like '%$qcari%'  ";
+	               where judul_buku like '%$qcari%'
+	               or nama_peminjam like '%$qcari%'  ";
                     }
                     $tampil=mysqli_query($conn, $query1) or die(mysql_error());
                     ?>
                     <table id="example" class="table table-hover table-bordered">
-                  <thead>
-                      <tr>
-                        <th><center>Judul Buku</center></th>
-                        <th><center>Nama Peminjaman</center></th>
-                        <th><center>Tanggal Pinjam</center></th>
-                        <th><center>Tanggal Kembali</center></th>
-                        <th><center>Status</center></th>
-                        <th><center>Keterangan</center></th>
-                      </tr>
-                  </thead>
-                     <?php while($data=mysqli_fetch_array($tampil))
-                    { ?>
-                    <tbody>
-                    <tr>
-                    <td><a href="404.php?hal=edit&kd=<?php echo $data['id'];?>"><span class="fa fa-book"></span> <?php echo $data['judul']; ?></a></td>
-                    <td><?php echo $data['judul_buku']; ?></td>
-                    <td><?php echo $data['tgl_pinjam'];?></td>
-                    <td><?php echo $data['tgl_kembali'];?></td>
-                    <td><?php echo $data['status'];?></td>
-                    <td><?php echo $data['ket'];?></td>
-                    <?php   
-              } 
-              ?>
-                   </tbody>
-                   </table>
+                        <thead>
+                        <tr>
+                            <th><center>Judul Buku</center></th>
+                            <th><center>Nama Peminjaman</center></th>
+                            <th><center>Tanggal Pinjam</center></th>
+                            <th><center>Tanggal Kembali</center></th>
+                            <th><center>Status</center></th>
+                            <th><center>Keterangan</center></th>
+                        </tr>
+                        </thead>
+                        <?php while($data=mysqli_fetch_array($tampil))
+                        { ?>
+                        <tbody>
+                            <tr>
+                                <td><span class="fa fa-book"></span> <?php echo $data['judul_buku']; ?></td>
+                                <td><?php echo $data['nama_peminjam'];?></td>
+                                <td><?php echo $data['tgl_pinjam'];?></td>
+                                <td><?php echo $data['tgl_kembali'];?></td>
+                                <td><?php echo $data['status'];?></td>
+                                <td><?php echo $data['ket'];?></td>
+                            </tr>
+                            <?php   
+                            } 
+                            ?>
+                        </tbody>
+                    </table>
                    
                   <?php $tampil=mysqli_query($conn, "select * from trans_pinjam order by id");
                         $transaksi=mysqli_num_rows($tampil);

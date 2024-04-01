@@ -128,7 +128,7 @@ tanggallengkap = namahari[hari] + ", " +tanggal + " " + namabulan[bulan] + " " +
                             <?php
                     $tanggal = date("Y/m/d");
                     $query1="select * from pengunjung where tgl_kunjung='$tanggal'";
-                    $tampil=mysqli_query($conn, $query1) or die(mysqli_error());
+                    $tampil=mysqli_query($conn, $query1) or die(mysqli_error($conn));
                     ?>
                         <table class="table table-hover">
                             <thead>
@@ -273,7 +273,7 @@ tanggallengkap = namahari[hari] + ", " +tanggal + " " + namabulan[bulan] + " " +
             <div class="panel-body table-responsive">
                 <?php
                 $query="select * from pengunjung order by id desc limit 10";
-                $tampil=mysqli_query($conn, $query) or die(mysqli_error());
+                $tampil=mysqli_query($conn, $query) or die(mysqli_error($conn));
                 ?>
                     <table class="table table-hover">
                         <thead>

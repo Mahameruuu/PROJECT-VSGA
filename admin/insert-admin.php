@@ -1,35 +1,43 @@
 <?php
-$namafolder = "gambar_admin/"; //tempat menyimpan file
+$namafolder = "gambar_admin/"; // tempat menyimpan file
 
 include "../conn.php";
 
 if (!empty($_FILES["nama_file"]["tmp_name"])) {
-    $jenis_gambar = $_FILES['nama_file']['type'];
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    $fullname = $_POST['fullname'];
+    $namaFile = $_FILES['nama_file']['name'];
+    $ukuranFile = $_FILES['nama_file']['size'];
+    $error = $_FILES['nama_file']['error'];
+    $tmpName = $_FILES['nama_file']['tmp_name'];
 
-    if ($jenis_gambar == "image/jpeg" || $jenis_gambar == "image/jpg" || $jenis_gambar == "image/x-png") {
-        $gambar = $namafolder . basename($_FILES['nama_file']['name']);
-        if (move_uploaded_file($_FILES['nama_file']['tmp_name'], $gambar)) {
-            // Validate and handle user_id
-            if (!empty($_POST['user_id']) && is_numeric($_POST['user_id'])) {
-                $user_id = $_POST['user_id'];
-                // If user_id is provided, include it in the query
-                $sql = "INSERT INTO admin(user_id, username, password, fullname, gambar) VALUES 
-                        ('$user_id', '$username', '$password', '$fullname', '$gambar')";
+    $ekstensiValid = ['jpg', 'jpeg', 'png', 'gif']; // ekstensi file yang diperbolehkan
+    $ekstensiFile = explode('.', $namaFile);
+    $ekstensiFile = strtolower(end($ekstensiFile));
+
+    if (in_array($ekstensiFile, $ekstensiValid)) {
+        if ($error === 0) {
+            $gambar = $namafolder . uniqid() . '.' . $ekstensiFile; // generate nama unik
+            if (move_uploaded_file($tmpName, $gambar)) {
+                $username = $_POST['username'];
+                $password = $_POST['password'];
+                $fullname = $_POST['fullname'];
+                $user_id = $_POST['user_id'] ?? null; // gunakan null jika tidak ada
+
+                $stmt = $conn->prepare("INSERT INTO admin(user_id, username, password, fullname, gambar) VALUES (?, ?, ?, ?, ?)");
+
+                if ($stmt) {
+                    $stmt->bind_param("issss", $user_id, $username, $password, $fullname, $gambar);
+                    $stmt->execute();
+                    echo "Gambar berhasil dikirim ke direktori " . $gambar;
+                    echo "<h3><a href='input-admin.php'> Input Lagi</a></h3>";
+                    echo "<h3><a href='admin.php'> Data Admin</a></h3>";
+                } else {
+                    echo "Error dalam membuat statement";
+                }
             } else {
-                // If user_id is not provided or not valid, exclude it from the query
-                $sql = "INSERT INTO admin(username, password, fullname, gambar) VALUES 
-                        ('$username', '$password', '$fullname', '$gambar')";
+                echo "<p>Gambar gagal dikirim</p>";
             }
-
-            $insert = mysqli_query($conn, $sql) or die(mysqli_error($conn));
-            echo "Gambar berhasil dikirim ke direktori " . $gambar;
-            echo "<h3><a href='input-admin.php'> Input Lagi</a></h3>";
-            echo "<h3><a href='admin.php'> Data Admin</a></h3>";
         } else {
-            echo "<p>Gambar gagal dikirim</p>";
+            echo "Upload gambar gagal, terdapat error pada file yang diupload";
         }
     } else {
         echo "Jenis gambar yang anda kirim salah. Harus .jpg .gif .png";
@@ -37,5 +45,4 @@ if (!empty($_FILES["nama_file"]["tmp_name"])) {
 } else {
     echo "Anda belum memilih gambar";
 }
-
 ?>

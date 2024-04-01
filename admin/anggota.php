@@ -181,7 +181,7 @@ $_SESSION['start_time'] = time();
 	               where no_induk like '%$qcari%'
 	               or nama like '%$qcari%'  ";
                     }
-                    $tampil=mysqli_query($conn, $query1) or die(mysqli_error());
+                    $tampil=mysqli_query($conn, $query1) or die(mysqli_error($conn));
                     ?>
                         <table id="example" class="table table-hover table-bordered">
                   <thead>

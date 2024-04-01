@@ -42,6 +42,7 @@
          <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
          <input type="text" id="password" name="password" class="form-control" placeholder="Password" autocomplete="off" required>
          </div>
+         <input type="checkbox" onclick="myFunction()">Show Password 
         <br />
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
       </form>
@@ -88,5 +89,15 @@
 
   <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
   <script src="js/ie10-viewport-bug-workaround.js"></script>
+  <script>
+    function myFunction() {
+            var x = document.getElementById("password");
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+        }
+  </script>
 </body>
 </html>

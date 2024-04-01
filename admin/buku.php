@@ -194,11 +194,11 @@ $_SESSION['start_time'] = time();
                         <th><center>Lokasi </center></th>
                       </tr>
                   </thead>
-                     <?php while($data=mysqli_fetch_array($tampil))
+                    <?php while($data=mysqli_fetch_array($tampil))
                     { ?>
                     <tbody>
                     <tr>
-                    <td><a href="404.php?hal=edit&kd=<?php echo $data['id'];?>"><span class="fa fa-book"></span> <?php echo $data['judul']; ?></a></td>
+                    <td><span class="fa fa-book"></span> <?php echo $data['judul']; ?></td>
                     <td><?php echo $data['pengarang']; ?></td>
                     <td><?php echo $data['th_terbit'];?></td>
                     <td><?php echo $data['penerbit'];?></td>

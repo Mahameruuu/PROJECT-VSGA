@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         header('Location: input-buku.php?status=success');
         exit;
     } else {
-        header('Location: input-buku.php?status=erro');
+        header('Location: input-buku.php?status=error');
         exit;
     }
 } else {
